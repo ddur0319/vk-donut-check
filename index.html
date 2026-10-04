@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Проверка VK Donut</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#f3f5f7;color:#17212b;font:16px/1.5 system-ui,sans-serif}main{max-width:900px;margin:auto;padding:24px 16px}h1{font-size:26px;margin:0 0 8px}h2{font-size:20px}section{background:#fff;border-radius:16px;padding:20px;margin:16px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}label{display:block}input,select,button{font:inherit;border-radius:8px;padding:10px;width:100%}input,select{border:1px solid #bcc8d4}button{border:0;background:#0077ff;color:#fff;cursor:pointer}button:disabled{opacity:.45;cursor:default}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.actions button{width:auto;flex:1}p{margin:8px 0}.muted{color:#596b7d;font-size:14px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf1f5;padding:12px;border-radius:8px;font-size:13px}.card{border-top:1px solid #dde4eb;padding:12px 0}.card a{color:#0077ff}.status{font-weight:600}#stop{background:#56687b}@media(max-width:560px){.grid{grid-template-columns:1fr}.actions{flex-direction:column}.actions button{width:100%}}
+  <script src="./vendor/bridge.js"></script>
+</head>
+<body>
+<main>
+  <h1>Проверка VK Donut</h1>
+  <p>Диагностический стенд: подписка, закрытые посты и пробный каталог.</p>
+  <p class="muted">Открывайте внутри зарегистрированного VK Mini App. Это проверка API, а не готовая система выдачи доступа.</p>
+  <section>
+    <div class="grid">
+      <label>ID приложения<input id="app" type="number" min="1" required></label>
+      <label>ID сообщества, без минуса<input id="group" type="number" min="1" required></label>
+      <label>Кто сейчас проверяет<select id="role"><option>Автор / администратор</option><option>Подписчик первого уровня</option><option>Подписчик другого уровня</option><option>Без подписки</option><option>Автопродление отменено</option><option>Оплаченный период закончился</option></select></label>
+      <label>Версия API<input id="version" value="5.199" required></label>
+      <label>Лимит импорта<input id="limit" type="number" value="500" min="1" max="10000"></label>
+    </div>
+    <p class="muted">Версия 5.199 взята из опубликованной схемы. При необходимости задайте поддерживаемую версию из кабинета VK.</p>
+    <div class="actions">
+      <button id="auth">1. Получить базовый токен</button>
+      <button id="subscription" disabled>2. Проверить подписку</button>
+      <button id="wall-auth">3. Запросить доступ к стене</button>
+      <button id="import" disabled>4. Импортировать</button>
+    </div>
+    <div class="actions"><button id="stop" disabled>Остановить импорт</button><button id="export">Скачать результат без токенов</button></div>
+    <p id="status" class="status" role="status">Инициализация…</p>
+  </section>
+  <section><h2>Подписка и диагностика</h2><pre id="results">Проверки ещё не запускались.</pre></section>
+  <section><h2>Пробный каталог</h2><label>Поиск по полученным текстам<input id="search" type="search" placeholder="Название или слово из поста"></label><p id="catalog-status" class="muted"></p><div id="catalog"></div></section>
+</main>
+<script type="module" src="./app.mjs"></script>
+</body>
+</html>
